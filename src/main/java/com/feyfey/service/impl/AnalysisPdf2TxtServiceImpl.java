@@ -30,12 +30,14 @@ public class AnalysisPdf2TxtServiceImpl implements AnalysisPdf2TxtService {
     @Value("${pdf.parseFileType}")
     private String parseFileType;
 
-//    private static final String parseFileType = "PDF";
-
+    /**
+     * @param filePath       读取pdf的文件路径
+     * @param resultFileName 解析后生成的文件径路
+     * @throws Exception
+     */
     @Override
     public void analysicPdf2Txt(String filePath, String resultFileName) throws Exception {
         try {
-            // StringBuilder returnMsg = new StringBuilder();
             String suffix = filePath.substring(filePath.lastIndexOf(".") + 1).toUpperCase();
             if (!parseFileType.equals(suffix)) {
                 logger.error("传入文件类型不正确");
@@ -80,13 +82,6 @@ public class AnalysisPdf2TxtServiceImpl implements AnalysisPdf2TxtService {
         return configuration;
     }
 
-    *//**
-     * 获取模板字符串输入流
-     *
-     * @param dataMap      参数,键为绑定变量名，值为变量值
-     * @param templateName 模板名称
-     * @return
-     *//*
     public static ByteArrayInputStream getFreemarkerContentInputStream(Map dataMap, String templateName) {
         ByteArrayInputStream in = null;
         try {
