@@ -34,6 +34,12 @@ public class AnalysisPdf2TxtController {
     @Autowired
     private AnalysisPdf2TxtService analysisPdf2TxtService;
 
+    /**
+     * @param request
+     * @param response
+     * @return 解析结果
+     * @throws Exception
+     */
     @RequestMapping(value = "/analysisPdf", method = RequestMethod.POST)
     @ResponseBody
     public JsonReturnResult analysisPdf(HttpServletRequest request,
@@ -42,7 +48,7 @@ public class AnalysisPdf2TxtController {
 //            String filePath=request.getParameter("filePath");
 //            String resultFileName=request.getParameter("resultFileName");
 
-            analysisPdf2TxtService.analysicPdf2Txt(filePath,resultFileName);
+            analysisPdf2TxtService.analysicPdf2Txt(filePath, resultFileName);
             return new JsonReturnResult(JsonReturnResultTypeEnum.SUCCESS, "解析成功");
         } catch (Exception e) {
             logger.error("解析文件出错：", e);
