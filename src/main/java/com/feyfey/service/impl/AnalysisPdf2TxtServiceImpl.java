@@ -35,7 +35,7 @@ public class AnalysisPdf2TxtServiceImpl implements AnalysisPdf2TxtService {
     @Override
     public void analysicPdf2Txt(String filePath, String resultFileName) throws Exception {
         try {
-            //        StringBuilder returnMsg = new StringBuilder();
+            // StringBuilder returnMsg = new StringBuilder();
             String suffix = filePath.substring(filePath.lastIndexOf(".") + 1).toUpperCase();
             if (!parseFileType.equals(suffix)) {
                 logger.error("传入文件类型不正确");

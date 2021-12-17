@@ -1,0 +1,8 @@
+#端口号
+server:
+  port: 8088
+
+pdf:
+  filePath: D:\\Others\\javadoc.pdf
+  resultFileName: D:\\parseResult.txt
+  parseFileType: PDF
