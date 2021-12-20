@@ -1,6 +1,6 @@
 package com.feyfey.service.impl;
 
-import com.feyfey.service.AnalysisPdf2TxtService;
+import com.feyfey.service.AnalysisPdfService;
 import com.lowagie.text.pdf.PdfReader;
 import com.spire.pdf.PdfDocument;
 import com.spire.pdf.PdfPageBase;
@@ -21,8 +21,8 @@ import java.io.*;
  * @date 2021/12/16 17:44
  */
 @Service
-public class AnalysisPdf2TxtServiceImpl implements AnalysisPdf2TxtService {
-    private static final Logger logger = LoggerFactory.getLogger(AnalysisPdf2TxtServiceImpl.class);
+public class AnalysisPdfServiceImpl implements AnalysisPdfService {
+    private static final Logger logger = LoggerFactory.getLogger(AnalysisPdfServiceImpl.class);
 
     @Value("${pdf.parseFileType}")
     private String parseFileType;
@@ -94,13 +94,13 @@ public class AnalysisPdf2TxtServiceImpl implements AnalysisPdf2TxtService {
             } else {
                 imgFolderPath = dstImgFolder + File.separator + imagePDFName;
             }
-
+            long start = System.currentTimeMillis();
             if (createDirectory(imgFolderPath)) {
                 pdDocument = PDDocument.load(file);
                 PDFRenderer renderer = new PDFRenderer(pdDocument);
                 PdfReader reader = new PdfReader(PdfFilePath);
                 int pages = reader.getNumberOfPages();// 获取PDF页数
-                System.out.println("PDF page number is:" + pages);
+                logger.info("PDF文档页数为:" + pages);
                 StringBuffer imgFilePath = null;
                 for (int i = 0; i < pages; i++) {
                     String imgFilePathPrefix = imgFolderPath
@@ -114,7 +114,9 @@ public class AnalysisPdf2TxtServiceImpl implements AnalysisPdf2TxtService {
                     BufferedImage image = renderer.renderImageWithDPI(i, dpi);
                     ImageIO.write(image, "png", dstFile);// PNG
                 }
-                logger.debug("PDF文档转PNG图片成功！");
+                pdDocument.close();
+                long end = System.currentTimeMillis();
+                logger.info("PDF文档转PNG图片成功！,总共耗时："+(end - start)+"毫秒");
             } else {
                 logger.error("PDF文档转PNG图片失败");
                 throw new Exception("创建" + imgFolderPath + "失败");
