@@ -4,7 +4,7 @@ package com.feyfey.service;
  * @author zhuxianfei
  * @date 2021/12/16 17:42
  */
-public interface AnalysisPdf2TxtService {
+public interface AnalysisPdfService {
 
     /**
      * PDF转换成TXT文件

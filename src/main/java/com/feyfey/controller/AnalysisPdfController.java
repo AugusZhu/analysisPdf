@@ -3,7 +3,7 @@ package com.feyfey.controller;
 
 import com.feyfey.constant.JsonReturnResult;
 import com.feyfey.constant.JsonReturnResultTypeEnum;
-import com.feyfey.service.AnalysisPdf2TxtService;
+import com.feyfey.service.AnalysisPdfService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +21,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping(value = "/pdf")
-public class AnalysisPdf2TxtController {
-    private static final Logger logger = LoggerFactory.getLogger(AnalysisPdf2TxtController.class);
+public class AnalysisPdfController {
+    private static final Logger logger = LoggerFactory.getLogger(AnalysisPdfController.class);
 
     @Autowired
-    private AnalysisPdf2TxtService analysisPdf2TxtService;
+    private AnalysisPdfService analysisPdf2TxtService;
 
     /**
      * @param request
