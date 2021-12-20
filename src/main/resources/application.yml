@@ -7,3 +7,4 @@ server:
 pdf:
   filePath: D:\\Others\\javadoc.pdf
   parseFileType: PDF
+  imagesPath: D:\Others\images
