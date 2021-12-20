@@ -25,10 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 public class AnalysisPdf2TxtController {
     private static final Logger logger = LoggerFactory.getLogger(AnalysisPdf2TxtController.class);
 
-    @Value("${pdf.filePath}")
-    private String filePath;
-
-
     @Autowired
     private AnalysisPdf2TxtService analysisPdf2TxtService;
 
@@ -43,8 +39,7 @@ public class AnalysisPdf2TxtController {
     public JsonReturnResult analysisPdf(HttpServletRequest request,
                                         HttpServletResponse response) throws Exception {
         try {
-           /* String filePath=request.getParameter("filePath");
-            String resultFileName=request.getParameter("resultFileName");*/
+            String filePath=request.getParameter("filePath");
             analysisPdf2TxtService.analysicPdf2Txt(filePath);
             return new JsonReturnResult(JsonReturnResultTypeEnum.SUCCESS, "解析成功");
         } catch (Exception e) {
