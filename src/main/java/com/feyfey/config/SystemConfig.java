@@ -1,4 +1,4 @@
-package com.feyfey.pdf;
+package com.feyfey.config;
 import org.apache.catalina.connector.Connector;
 import org.apache.coyote.http11.AbstractHttp11Protocol;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
  *  * 配置Spring boot支持在查询参数中加/字符。
  */
 @Configuration
-
 public class SystemConfig {
     @Bean
     public TomcatServletWebServerFactory containerFactory() {

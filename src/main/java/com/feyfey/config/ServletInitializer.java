@@ -1,4 +1,4 @@
-package com.feyfey.pdf;
+package com.feyfey.config;
 
 import com.feyfey.AnalysispdfApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
