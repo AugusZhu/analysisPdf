@@ -1,15 +1,19 @@
 package com.feyfey.service.impl;
 
 import com.feyfey.service.AnalysisPdf2TxtService;
+import com.lowagie.text.pdf.PdfReader;
 import com.spire.pdf.PdfDocument;
 import com.spire.pdf.PdfPageBase;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
-
 
 
 /**
@@ -23,8 +27,9 @@ public class AnalysisPdf2TxtServiceImpl implements AnalysisPdf2TxtService {
     @Value("${pdf.parseFileType}")
     private String parseFileType;
 
+
     /**
-     * @param filePath       读取pdf的文件路径
+     * @param filePath 读取pdf的文件路径
      * @throws Exception
      */
     @Override
@@ -65,9 +70,81 @@ public class AnalysisPdf2TxtServiceImpl implements AnalysisPdf2TxtService {
         }
     }
 
+    /**
+     * PDF文件转PNG/JPEG图片
+     *
+     * @param PdfFilePath  pdf完整路径
+     * @param dstImgFolder 图片存放的文件夹
+     * @param dpi          越大转换后越清晰，相对转换速度越慢,一般电脑默认96dpi
+     */
+    @Override
+    public void analysicPdf2Image(String PdfFilePath,
+                                  String dstImgFolder, int dpi) throws Exception {
+        File file = new File(PdfFilePath);
+        PDDocument pdDocument;
+        try {
+            String imgPDFPath = file.getParent();
+            int dot = file.getName().lastIndexOf('.');
+            // 获取图片文件名
+            String imagePDFName = file.getName().substring(0, dot);
+            String imgFolderPath = null;
+            if (dstImgFolder.equals("")) {
+                // 获取图片存放的文件夹路径
+                imgFolderPath = imgPDFPath + File.separator + imagePDFName;
+            } else {
+                imgFolderPath = dstImgFolder + File.separator + imagePDFName;
+            }
+
+            if (createDirectory(imgFolderPath)) {
+                pdDocument = PDDocument.load(file);
+                PDFRenderer renderer = new PDFRenderer(pdDocument);
+                PdfReader reader = new PdfReader(PdfFilePath);
+                int pages = reader.getNumberOfPages();// 获取PDF页数
+                System.out.println("PDF page number is:" + pages);
+                StringBuffer imgFilePath = null;
+                for (int i = 0; i < pages; i++) {
+                    String imgFilePathPrefix = imgFolderPath
+                            + File.separator + imagePDFName;
+                    imgFilePath = new StringBuffer();
+                    imgFilePath.append(imgFilePathPrefix);
+                    imgFilePath.append("_");
+                    imgFilePath.append(String.valueOf(i + 1));
+                    imgFilePath.append(".png");// PNG
+                    File dstFile = new File(imgFilePath.toString());
+                    BufferedImage image = renderer.renderImageWithDPI(i, dpi);
+                    ImageIO.write(image, "png", dstFile);// PNG
+                }
+                logger.debug("PDF文档转PNG图片成功！");
+            } else {
+                logger.error("PDF文档转PNG图片失败");
+                throw new Exception("创建" + imgFolderPath + "失败");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new Exception("转换文件处理异常");
+        }
+    }
+
+
+    /**
+     * 创建文件夹
+     *
+     * @param folder
+     * @return
+     */
+    private static boolean createDirectory(String folder) {
+        File dir = new File(folder);
+        if (dir.exists()) {
+            return true;
+        } else {
+            return dir.mkdirs();
+        }
+    }
+
 
     /**
      * 判断是否路径参数中的文件是否存在
+     *
      * @param filePath
      * @return
      */
