@@ -28,8 +28,6 @@ public class AnalysisPdf2TxtController {
     @Value("${pdf.filePath}")
     private String filePath;
 
-    @Value("${pdf.resultFileName}")
-    private String resultFileName;
 
     @Autowired
     private AnalysisPdf2TxtService analysisPdf2TxtService;
@@ -45,10 +43,9 @@ public class AnalysisPdf2TxtController {
     public JsonReturnResult analysisPdf(HttpServletRequest request,
                                         HttpServletResponse response) throws Exception {
         try {
-//            String filePath=request.getParameter("filePath");
-//            String resultFileName=request.getParameter("resultFileName");
-
-            analysisPdf2TxtService.analysicPdf2Txt(filePath, resultFileName);
+           /* String filePath=request.getParameter("filePath");
+            String resultFileName=request.getParameter("resultFileName");*/
+            analysisPdf2TxtService.analysicPdf2Txt(filePath);
             return new JsonReturnResult(JsonReturnResultTypeEnum.SUCCESS, "解析成功");
         } catch (Exception e) {
             logger.error("解析文件出错：", e);
