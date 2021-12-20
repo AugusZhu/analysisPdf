@@ -7,7 +7,6 @@ import com.feyfey.service.AnalysisPdf2TxtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,12 +30,12 @@ public class AnalysisPdf2TxtController {
     /**
      * @param request
      * @param response
-     * @return 解析结果
+     * @return 解析结果 pdf文件转换成text文件
      * @throws Exception
      */
-    @RequestMapping(value = "/analysisPdf", method = RequestMethod.POST)
+    @RequestMapping(value = "/analysisPdf2Text", method = RequestMethod.POST)
     @ResponseBody
-    public JsonReturnResult analysisPdf(HttpServletRequest request,
+    public JsonReturnResult analysisPdf2Text(HttpServletRequest request,
                                         HttpServletResponse response) throws Exception {
         try {
             String filePath=request.getParameter("filePath");
@@ -48,5 +47,28 @@ public class AnalysisPdf2TxtController {
 
         }
     }
+
+    /**
+     *
+     * @param request
+     * @return 将pdf转换成png格式的图片
+     * @throws Exception
+     */
+    @RequestMapping(value = "/analysisPdf2Image", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonReturnResult analysisPdf2Image(HttpServletRequest request) throws Exception {
+        try {
+            String PdfFilePath=request.getParameter("PdfFilePath");
+            String dstImgFolder=request.getParameter("dstImgFolder");
+            Integer dpi=Integer.parseInt(request.getParameter("dpi"));
+            analysisPdf2TxtService.analysicPdf2Image(PdfFilePath,dstImgFolder,dpi);
+            return new JsonReturnResult(JsonReturnResultTypeEnum.SUCCESS, "转换成功");
+        } catch (Exception e) {
+            logger.error("转换pdf文件出错：", e);
+            return new JsonReturnResult(JsonReturnResultTypeEnum.FAILURE, e.getMessage());
+
+        }
+    }
+
 
 }
