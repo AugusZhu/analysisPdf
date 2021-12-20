@@ -1,6 +1,8 @@
 #端口号
 server:
   port: 8088
+  servlet:
+    context-path: /utils
 
 pdf:
   filePath: D:\\Others\\javadoc.pdf
