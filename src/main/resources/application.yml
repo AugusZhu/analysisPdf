@@ -4,5 +4,4 @@ server:
 
 pdf:
   filePath: D:\\Others\\javadoc.pdf
-  resultFileName: D:\\parseResult.txt
   parseFileType: PDF
