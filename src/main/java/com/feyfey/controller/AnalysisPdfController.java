@@ -36,9 +36,9 @@ public class AnalysisPdfController {
     @RequestMapping(value = "/analysisPdf2Text", method = RequestMethod.POST)
     @ResponseBody
     public JsonReturnResult analysisPdf2Text(HttpServletRequest request,
-                                        HttpServletResponse response) throws Exception {
+                                             HttpServletResponse response) throws Exception {
         try {
-            String filePath=request.getParameter("filePath");
+            String filePath = request.getParameter("filePath");
             analysisPdf2TxtService.analysicPdf2Txt(filePath);
             return new JsonReturnResult(JsonReturnResultTypeEnum.SUCCESS, "解析成功");
         } catch (Exception e) {
@@ -49,7 +49,6 @@ public class AnalysisPdfController {
     }
 
     /**
-     *
      * @param request
      * @return 将pdf转换成png格式的图片
      * @throws Exception
@@ -58,10 +57,31 @@ public class AnalysisPdfController {
     @ResponseBody
     public JsonReturnResult analysisPdf2Image(HttpServletRequest request) throws Exception {
         try {
-            String PdfFilePath=request.getParameter("PdfFilePath");
-            String dstImgFolder=request.getParameter("dstImgFolder");
-            Integer dpi=Integer.parseInt(request.getParameter("dpi"));
-            analysisPdf2TxtService.analysicPdf2Image(PdfFilePath,dstImgFolder,dpi);
+            String PdfFilePath = request.getParameter("PdfFilePath");
+            String dstImgFolder = request.getParameter("dstImgFolder");
+            Integer dpi = Integer.parseInt(request.getParameter("dpi"));
+            analysisPdf2TxtService.analysicPdf2Image(PdfFilePath, dstImgFolder, dpi);
+            return new JsonReturnResult(JsonReturnResultTypeEnum.SUCCESS, "转换成功");
+        } catch (Exception e) {
+            logger.error("转换pdf文件出错：", e);
+            return new JsonReturnResult(JsonReturnResultTypeEnum.FAILURE, e.getMessage());
+
+        }
+    }
+
+
+    /**
+     * @param request
+     * @return 将pdf转换成doc文档
+     * @throws Exception
+     */
+    @RequestMapping(value = "/analysisPdf2Doc", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonReturnResult analysisPdf2Doc(HttpServletRequest request) throws Exception {
+        try {
+            String PdfFilePath = request.getParameter("PdfFilePath");
+            String docFolder = request.getParameter("docFolder");
+            analysisPdf2TxtService.analysicPdf2Doc(PdfFilePath, docFolder);
             return new JsonReturnResult(JsonReturnResultTypeEnum.SUCCESS, "转换成功");
         } catch (Exception e) {
             logger.error("转换pdf文件出错：", e);
