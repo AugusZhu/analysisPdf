@@ -8,3 +8,10 @@ pdf:
   filePath: D:\\Others\\javadoc.pdf
   parseFileType: PDF
   imagesPath: D:\Others\images
+
+#在配置文件application.properties中加了超时设置超时时间为20000ms即30s
+spring:
+  mvc:
+    async:
+      request-timeout: 30000
+
