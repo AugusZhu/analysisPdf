@@ -81,9 +81,14 @@ public class AnalysisPdfServiceImpl implements AnalysisPdfService {
     @Override
     public void analysicPdf2Image(String PdfFilePath,
                                   String dstImgFolder, int dpi) throws Exception {
+        String suffix = PdfFilePath.substring(PdfFilePath.lastIndexOf(".") + 1).toLowerCase();
         if (!fileIsExists(PdfFilePath)) {
             logger.error("待转换文件不存在");
             throw new Exception("待转换文件不存在");
+        }
+        if (!PDF_SUFFIX.equals(suffix)) {
+            logger.error("传入文件类型不正确");
+            throw new Exception("传入文件不是PDF文档,请检查！");
         }
         File file = new File(PdfFilePath);
         PDDocument pdDocument;
@@ -141,9 +146,14 @@ public class AnalysisPdfServiceImpl implements AnalysisPdfService {
      */
     @Override
     public void analysicPdf2Doc(String PdfFilePath, String docImgFolder) throws Exception {
+        String suffix = PdfFilePath.substring(PdfFilePath.lastIndexOf(".") + 1).toLowerCase();
         if (!fileIsExists(PdfFilePath)) {
             logger.error("待转换文件不存在");
             throw new Exception("待转换文件不存在");
+        }
+        if (!PDF_SUFFIX.equals(suffix)) {
+            logger.error("传入文件类型不正确");
+            throw new Exception("传入文件不是PDF文档,请检查！");
         }
         File file = new File(PdfFilePath);
         try {
