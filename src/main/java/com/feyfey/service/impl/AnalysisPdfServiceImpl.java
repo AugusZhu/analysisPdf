@@ -9,7 +9,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -25,8 +24,9 @@ import java.io.*;
 public class AnalysisPdfServiceImpl implements AnalysisPdfService {
     private static final Logger logger = LoggerFactory.getLogger(AnalysisPdfServiceImpl.class);
 
-    @Value("${pdf.parseFileType}")
-    private String parseFileType;
+    private static final String DOCX_SUFFIX = ".docx";
+
+    private static final String PDF_SUFFIX = "pdf";
 
 
     /**
@@ -40,8 +40,8 @@ public class AnalysisPdfServiceImpl implements AnalysisPdfService {
             throw new Exception("待解析文件不存在");
         }
         String parseFileName = filePath.substring(0, filePath.lastIndexOf(".")) + ".txt";
-        String suffix = filePath.substring(filePath.lastIndexOf(".") + 1).toUpperCase();
-        if (!parseFileType.equals(suffix)) {
+        String suffix = filePath.substring(filePath.lastIndexOf(".") + 1).toLowerCase();
+        if (!PDF_SUFFIX.equals(suffix)) {
             logger.error("传入文件类型不正确");
             throw new Exception("传入文件类型不正确");
         } else {
@@ -154,9 +154,9 @@ public class AnalysisPdfServiceImpl implements AnalysisPdfService {
             String docFolderPath = null;
             if (docImgFolder.equals("")) {
                 // 获取图片存放的文件夹路径
-                docFolderPath = docPDFPath + File.separator + docPDFName + ".doc";
+                docFolderPath = docPDFPath + File.separator + docPDFName + DOCX_SUFFIX;
             } else {
-                docFolderPath = docImgFolder + File.separator + docPDFName + ".doc";
+                docFolderPath = docImgFolder + File.separator + docPDFName + DOCX_SUFFIX;
             }
             long start = System.currentTimeMillis();
             if (createDirectory(docFolderPath)) {
