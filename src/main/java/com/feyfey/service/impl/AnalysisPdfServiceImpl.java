@@ -25,7 +25,7 @@ public class AnalysisPdfServiceImpl implements AnalysisPdfService {
     private static final Logger logger = LoggerFactory.getLogger(AnalysisPdfServiceImpl.class);
 
     private static final String DOCX_SUFFIX = ".docx";
-
+    private static final String TEXT_SUFFIX = ".txt";
     private static final String PDF_SUFFIX = "pdf";
 
 
@@ -39,7 +39,7 @@ public class AnalysisPdfServiceImpl implements AnalysisPdfService {
             logger.error("待解析文件不存在");
             throw new Exception("待解析文件不存在");
         }
-        String parseFileName = filePath.substring(0, filePath.lastIndexOf(".")) + ".txt";
+        String parseFileName = filePath.substring(0, filePath.lastIndexOf(".")) + TEXT_SUFFIX;
         String suffix = filePath.substring(filePath.lastIndexOf(".") + 1).toLowerCase();
         if (!PDF_SUFFIX.equals(suffix)) {
             logger.error("传入文件类型不正确");
