@@ -53,3 +53,6 @@
  `service_ip:port/utils/pdf/analysisPdf2Doc?PdfFilePath=D:/Others/Java开发手册.pdf&docFolder=D:/Others/doc`
  - 返回示例
  `{"returnType":"SUCCESS","content":"转换成功"}`
+ 
+- 特殊说明
+`转word使用的jar为基础免费版本,只可转换10页及以内的文档内容`
