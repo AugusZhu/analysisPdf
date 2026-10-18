@@ -1,17 +1,16 @@
-#端口号
+# 服务端口与 context path
 server:
   port: 8088
   servlet:
     context-path: /utils
 
+# PDF 转换边界：目录限制为空时表示不限制
 pdf:
-  filePath: D:\\Others\\javadoc.pdf
-  parseFileType: PDF
-  imagesPath: D:\Others\images
-
-#在配置文件application.properties中加了超时设置超时时间为20000ms即30s
-spring:
-  mvc:
-    async:
-      request-timeout: 30000
+  allowed-input-root:
+  allowed-output-root:
+  max-file-size: 104857600
+  max-pages: 1000
+  max-dpi: 300
+  max-image-pixels: 25000000
+  free-docx-max-pages: 3
 

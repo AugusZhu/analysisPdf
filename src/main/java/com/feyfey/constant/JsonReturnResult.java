@@ -1,11 +1,13 @@
 package com.feyfey.constant;
 
+/**
+ * 统一接口响应体。
+ */
 public class JsonReturnResult {
     private JsonReturnResultTypeEnum returnType;
     private String content;
 
     public JsonReturnResult(JsonReturnResultTypeEnum returnType, String content) {
-        super();
         this.returnType = returnType;
         this.content = content;
     }
